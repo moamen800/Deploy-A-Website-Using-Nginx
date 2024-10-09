@@ -1,0 +1,56 @@
+# Clone the repository from GitHub
+$ git clone https://github.com/MenaMagdyHalem/Course-Docker.git
+
+# Print the current working directory to confirm where you are
+$ pwd
+
+# List the files in the current directory to see what was cloned
+$ ls
+
+# Navigate into the 'Course-Docker' directory to review its contents
+$ cd Course-Docker
+
+# Create a Dockerfile using vim text editor
+$ vim Dockerfile
+
+# Paste the following into the Dockerfile:
+# Use the official nginx image from Docker Hub as the base image
+FROM nginx:latest
+
+# Copy the contents of the local 'sample-website' folder into the nginx web root
+COPY ./Course-Docker/sample-website /usr/share/nginx/html/
+
+# Expose port 80 to allow web traffic into the container
+EXPOSE 80
+
+# Save and exit the Dockerfile
+
+# Build the Docker image using the Dockerfile and tag it as 'website'
+$ docker build -t website .
+
+# List all Docker images to confirm that the new image was created
+$ docker images
+
+# Run the container in detached mode, map port 3000 on the host to port 80 in the container
+# --rm will automatically remove the container when it stops
+# -d runs the container in detached mode (in the background)
+# -p maps port 3000 on your host to port 80 on the container
+$ docker run -it --rm -d -p 3000:80 --name web website
+
+# >> Now, open your browser and go to 'localhost:3000' to view the website running in the container
+
+# Save the changes made in the running container as a new image and tag it as 'moamen800/new-web'
+$ docker commit web moamen800/new-web
+
+# Log in to Docker Hub using your credentials (required for pushing images)
+$ docker login
+
+# Push the newly created image to Docker Hub under your Docker Hub repository 'moamen800'
+$ docker push moamen800/new-web
+
+# Pull the same image back from Docker Hub to confirm it was pushed successfully
+# and run it again, this time mapping port 4000 on the host to port 80 on the container
+$ docker run -it --rm -d -p 4000:80 --name new-hub moamen800/new-web
+
+# >> Now, open your browser and go to 'localhost:4000' to view the website running in the new container
+
