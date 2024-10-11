@@ -13,7 +13,7 @@ This project can be beneficial for developers looking to understand how to deplo
 
 ## Installation
 
-### Step 1: Clone the Repository
+### Clone the Repository
 First, clone the repository containing the sample website:
 
 bash
